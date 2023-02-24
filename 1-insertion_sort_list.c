@@ -18,6 +18,7 @@ void insertion_sort_list(listint_t **list)
 		prev = node->prev;
 		while ((prev != NULL) && (prev->n > node->n))
 		{
+			/* swap nodes */
 			prev->next = node->next;
 			if (node->next != NULL)
 				node->next->prev = prev;
