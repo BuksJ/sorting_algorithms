@@ -8,38 +8,30 @@
 
 void insertion_sort_list(listint_t **list)
 {
+	listint_t *node = NULL, *prev = NULL;
+
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
-
-	listint_t *curr = (*list)->next;
-
-	while (curr != NULL)
+	node = (*list)->next;
+	while (node != NULL)
 	{
-		listint_t *prev = curr->prev;
-
-		while (prev != NULL && prev->n > curr->n)
+		prev = node->prev;
+		while ((prev != NULL) && (prev->n > node->n))
 		{
-			/* swap nodes */
-			listint_t *tmp = prev->prev;
-
-			prev->prev = curr;
-			prev->next = curr->next;
-			curr->prev = tmp;
-			curr->next = prev;
-
-			if (tmp != NULL)
-				tmp->next = curr;
-
-			if (prev->next != NULL)
-				prev->next->prev = prev;
-
-			prev = tmp;
-
-			/* print list */
+			prev->next = node->next;
+			if (node->next != NULL)
+				node->next->prev = prev;
+			node->next = prev;
+			node->prev = prev->prev;
+			prev->prev = node;
+			if (node->prev != NULL)
+				node->prev->next = node;
+			else
+				*list = node;
+			prev = curr->prev;
 			print_list(*list);
 		}
-
-		curr = curr->next;
+		node = node->next;
 	}
 }
 
